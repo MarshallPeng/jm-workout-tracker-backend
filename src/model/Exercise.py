@@ -1,6 +1,8 @@
+MAX_RPE = 10
+MIN_RPE = 0
 class Exercise:
 
-    def __init__(self, name, weight, total_sets, total_reps, rest_time):
+    def __init__(self, name, weight, total_sets, total_reps, rest_time, rpe):
         self.name = name
         self.weight = weight
         self.rest_time = rest_time
@@ -10,6 +12,7 @@ class Exercise:
         self.completed_reps = 0
         self.completed_volume = 0
         self.expected_volume = total_sets * total_reps * weight
+        self.rpe = 0
 
 
     def set_rest_time(self, rest_time):
@@ -39,6 +42,15 @@ class Exercise:
     #Could be potentially used in the future
     def get_expected_volume(self):
         return self.expected_volume
+
+    def set_rpe(self, rpe):
+        if rpe > 10 or rpe < 0:
+            return -1
+        else:
+            self.rpe = rpe
+            return 0
+         
+
 
 
 
