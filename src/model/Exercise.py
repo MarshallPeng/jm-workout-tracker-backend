@@ -1,6 +1,8 @@
-MAX_RPE = 10
-MIN_RPE = 0
+
+
 class Exercise:
+    MAX_RPE = 10
+    MIN_RPE = 0
 
     def __init__(self, name, weight, total_sets, total_reps, rest_time, rpe):
         self.name = name
