@@ -8,3 +8,5 @@ lib/
 
 *.pyc
 *~
+
+*jm-workout-tracker-firebase-adminsdk.json
