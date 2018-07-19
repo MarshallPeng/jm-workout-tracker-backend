@@ -30,7 +30,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python -m venv venv
+            python -m virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
 
@@ -48,7 +48,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python -m unittest discover -s test -p '*Test.py'
+            nosetests -v ./test/*.py
 
       - store_artifacts:
           path: test-reports
