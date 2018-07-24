@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Script to firebase sdk key so that tests can be run
 
 if [[ $SDK_URL ]]
 then
