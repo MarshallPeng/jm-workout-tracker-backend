@@ -7,7 +7,6 @@ class Workout:
         self.is_repeated = is_repeated
         self.date = date
 
-
     def add_exercise(self, exercise):
         self.exercises.add(exercise)
 

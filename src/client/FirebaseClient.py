@@ -2,9 +2,6 @@ import firebase_admin
 from firebase_admin import db, credentials
 from src.config.config import FirebaseConfig
 from src.constants.DatabaseConstants import DatabaseConstants
-from src.model.Exercise import Exercise
-from src.model.Workout import Workout
-from src.model.User import User
 
 class FirebaseClient:
 
@@ -16,15 +13,20 @@ class FirebaseClient:
             'databaseURL': FirebaseConfig.DATABASE_URL
         })
         self.db = db.reference()
+    def add_workout(self, user, workout):
+        self.db.push(DatabaseConstants.USERS + '/' +  user + '/' + DatabaseConstants.WORKOUTS, workout)
 
     def set_workout(self, user, workout):
-        self.db.child(DatabaseConstants.USERS + user + DatabaseConstants.WORKOUTS).set(workout)
+        self.db.child(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS).set(workout)
 
     def get_workout(self, user):
         return self.db.get(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)
 
     def delete_workout(self, user):
-        self.db.get_workout(user).delete()
+        self.get_workout(user).delete()
+
+    def add_workout(self, user, workout):
+        self.db.push(DatabaseConstants.USERS + user + DatabaseConstants.WORKOUTS, workout)
 
     def set_exercise(self, user, workout, exercise):
         self.db.child(
@@ -36,7 +38,7 @@ class FirebaseClient:
             DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout + '/' + DatabaseConstants)
 
     def delete_exercise(self, user, workout):
-        self.db.get_exercise(self, user, workout).delete()
+        self.get_exercise(user, workout).delete()
 
 
 

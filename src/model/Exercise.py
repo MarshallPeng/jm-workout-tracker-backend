@@ -16,7 +16,6 @@ class Exercise:
         self.expected_volume = total_sets * total_reps * weight
         self.rpe = 0
 
-
     def set_rest_time(self, rest_time):
         self.rest_time = rest_time
 
