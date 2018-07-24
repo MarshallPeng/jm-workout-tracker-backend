@@ -15,10 +15,10 @@ class FirebaseClient:
         self.db = db.reference()
 
     def add_user(self, user):
-        self.db.push(DatabaseConstants.USERS, user)
+        self.db.push(DatabaseConstants.USERS + '/' + user.user_name)
 
     def set_user(self, user):
-        self.db.child(DatabaseConstants.USERS + '/' + user).set(user)
+        self.db.child(DatabaseConstants.USERS + '/').set(user)
 
     def get_usertemp0(self, user):
         return self.db.get(DatabaseConstants.USERS + '/' + user)

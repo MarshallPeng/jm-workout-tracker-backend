@@ -15,9 +15,9 @@ class FirebaseClientTest(unittest.TestCase):
         self.workout = Workout("the day!!", 0, 0, 0, 0)
         self.user = User("Jake")
         self.firebase_client_test = FirebaseClient()
-    def test_set_user(self):
+    def test_add_user(self):
         self.set_up()
-        FirebaseClient.set_user(self.firebase_client_test, self.user)
+        FirebaseClient.add_user(self.firebase_client_test, self.user)
         assert(FirebaseClient.get_usertemp0(self.firebase_client_test, self.user) is not None)
         assert(FirebaseClient.get_usertemp1(self.firebase_client_test, self.user) is not None)
 
