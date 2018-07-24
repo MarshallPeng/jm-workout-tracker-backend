@@ -1,7 +1,7 @@
 class Workout:
 
-    def __init__(self, title, exercises, category, is_repeated, date):
-        self.title = title
+    def __init__(self, name, exercises, category, is_repeated, date):
+        self.name = name
         self.exercises = exercises
         self.category = category
         self.is_repeated = is_repeated
