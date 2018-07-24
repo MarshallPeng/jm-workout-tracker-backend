@@ -13,14 +13,36 @@ class FirebaseClient:
             'databaseURL': FirebaseConfig.DATABASE_URL
         })
         self.db = db.reference()
+
+    def add_user(self, user):
+        self.db.push(DatabaseConstants.USERS, user)
+
+    def set_user(self, user):
+        self.db.child(DatabaseConstants.USERS + '/' + user).set(user)
+
+    def get_usertemp0(self, user):
+        return self.db.get(DatabaseConstants.USERS + '/' + user)
+    def get_usertemp1(self, user):
+        return self.db.child(DatabaseConstants.USERS + '/' + user)
+
+    def delete_usertemp0(self, user):
+        self.get_usertemp0(user).delete()
+
+    def delete_usertemp1(self, user):
+        self.get_usertemp1(user).delete()
+
+
     def add_workout(self, user, workout):
         self.db.push(DatabaseConstants.USERS + '/' +  user + '/' + DatabaseConstants.WORKOUTS, workout)
 
     def set_workout(self, user, workout):
         self.db.child(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS).set(workout)
 
-    def get_workout(self, user):
+    def get_workouttemp0(self, user):
         return self.db.get(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)
+
+    def get_workouttemp1(self,user):
+        return self.db.child(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)
 
     def delete_workout(self, user):
         self.get_workout(user).delete()
