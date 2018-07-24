@@ -10,20 +10,19 @@ class FirebaseClientTest(unittest.TestCase):
     workout = None
     user = None
     firebase_client_test = None
-    def set_up(self):
+
+
+    def setUp(self):
         self.exercise = Exercise("Barbell curl", 135, 3, 12, 500, 11)
         self.workout = Workout("the day!!", 0, 0, 0, 0)
         self.user = User("Jake")
-        self.firebase_client_test = FirebaseClient()
-    def test_add_user(self):
-        self.set_up()
-        FirebaseClient.add_user(self.firebase_client_test, self.user)
-        assert(FirebaseClient.get_usertemp0(self.firebase_client_test, self.user) is not None)
-        assert(FirebaseClient.get_usertemp1(self.firebase_client_test, self.user) is not None)
+        self.firebase_test_client = FirebaseClient()
 
-    def main(self):
-        self.set_up()
-        self.test_add_user()
+    def test_set_user(self):
+        """
+        Check to see that user can be created
+        """
+        self.firebase_test_client.set_user(self.user)
+        retrieved = self.firebase_test_client.get_user(self.user)
 
-    if __name__ == "__main__":
-        main()
+        self.assertEquals(self.user.__dict__, retrieved)
