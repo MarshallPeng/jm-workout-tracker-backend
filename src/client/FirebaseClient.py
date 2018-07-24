@@ -23,29 +23,35 @@ class FirebaseClient:
     def get_user(self, user):
         return self.db.child(DatabaseConstants.USERS + '/' + user.user_name).get()
 
+    #for jake: for now use set_workout
     def add_workout(self, user, workout):
-        self.db.push(DatabaseConstants.USERS + '/' +  user + '/' + DatabaseConstants.WORKOUTS)
+        self.db.push(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)
 
     def set_workout(self, user, workout):
-        self.db.child(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS).set(workout)
+        self.db.child(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout.title).set(workout.__dict)
 
-    def delete_workout(self, user):
-        self.get_workout(user).delete()
+    def delete_workout(self, user, workout):
+        self.db.child(DatabaseConstants.USERS + '/' + user.user_name + '/' + DatabaseConstants.WORKOUTS + + workout.name)
 
-    def add_workout(self, user, workout):
-        self.db.push(DatabaseConstants.USERS + user + DatabaseConstants.WORKOUTS, workout)
+    def get_workout(self, user, workout):
+        #TODO: after UUID implemented, have get_workout_by_id method and get_by_name prob
+        return self.db.child(
+            DatabaseConstants.USERS + '/' + user.user_name + '/' + DatabaseConstants.WORKOUTS + + workout.name).get()
 
     def set_exercise(self, user, workout, exercise):
+        #Marshall, would it be cleaner to call delete on the get_user() or is this fine?
         self.db.child(
             DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout + '/' + DatabaseConstants.EXERCISES).set(
-            exercise)
+            exercise).set(exercise.__dict__)
 
-    def get_exercise(self, user, workout):
-        return self.db.get(
-            DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout + '/' + DatabaseConstants)
+    def get_exercise(self, user, workout, exercise):
+        return self.db.child(
+            DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout + '/' + DatabaseConstants.EXERCISES + '/' + exercise.name).get()
 
-    def delete_exercise(self, user, workout):
-        self.get_exercise(user, workout).delete()
+    def delete_exercise(self, user, workout, exercise):
+        self.db.child(
+            DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout + '/' + DatabaseConstants.EXERCISES).set(
+            exercise).set(user, workout, exercise).delete()
 
 
 
