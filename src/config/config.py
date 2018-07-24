@@ -1,7 +1,8 @@
-from pathlib import Path
+import os
+
 class FirebaseConfig:
 
     DATABASE_URL = 'https://jm-workout-tracker.firebaseio.com/'
-    SDK_PATH = Path("../src/config/").resolve()
-    SDK_PATH = str(SDK_PATH.absolute()) + '/jm-workout-tracker-firebase-adminsdk.json'
+    PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
+    SDK_PATH = PROJECT_ROOT + "/config/jm-workout-tracker-firebase-adminsdk.json"
 
