@@ -18,10 +18,10 @@ class FirebaseClient:
         self.db.push(DatabaseConstants.USERS, user)
 
     def set_user(self, user):
-        self.db.child(DatabaseConstants.USERS + '/' + user.user_name).set(user.__dict__)
+        self.db.child(DatabaseConstants.USERS + '/' + user.id).set(user.__dict__)
 
     def get_user(self, user):
-        return self.db.child(DatabaseConstants.USERS + '/' + user.user_name).get()
+        return self.db.child(DatabaseConstants.USERS + '/' + user.id).get()
 
     #for jake: for now use set_workout
     def add_workout(self, user, workout):
