@@ -1,5 +1,5 @@
 import unittest
-import json
+import firebase_admin
 from src.client.FirebaseClient import FirebaseClient
 from src.model.User import User
 from src.model.Workout import Workout
@@ -12,6 +12,10 @@ class FirebaseClientTest(unittest.TestCase):
         self.workout = Workout("workout_id", "workout_name", [], "workout_category", "workout_is_repeated", "Workout_date")
         self.user = User("test_id","test_first_name", "test_last_name", workouts=[self.workout])
         self.firebase_test_client = FirebaseClient()
+
+
+    def tearDown(self):
+        firebase_admin.delete_app(firebase_admin.get_app())
 
     def test_set_user(self):
         """
