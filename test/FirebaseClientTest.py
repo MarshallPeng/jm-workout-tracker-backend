@@ -3,7 +3,6 @@ import json
 from src.client.FirebaseClient import FirebaseClient
 from src.model.User import User
 from src.model.Workout import Workout
-from src.util.JsonConvert import JsonConvert
 
 
 class FirebaseClientTest(unittest.TestCase):

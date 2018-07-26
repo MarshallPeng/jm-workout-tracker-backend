@@ -1,6 +1,4 @@
 from src.constants import WorkoutCategory
-
-
 class Workout:
 
     def __init__(self, id, name, exercises, category, is_repeated, date):
