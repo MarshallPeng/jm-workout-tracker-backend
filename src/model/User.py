@@ -1,11 +1,16 @@
-#TODO: Full implementation. just made for tests rn
+import json
+from src.model.Workout import Workout
+
 class User:
 
-    def __init__(self, id, first_name, last_name):
+    def __init__(self, id, first_name, last_name, workouts=[]):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
-        self.workouts = []
+        self.workouts = workouts
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
 
     def set_first_name(self, first_name):
@@ -13,6 +18,24 @@ class User:
 
     def set_last_name(self, last_name):
         self.last_name = last_name
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
+
+    # TODO: Come up with more elegant solution to converting from json to object. Recursive solution maybe?
+    @staticmethod
+    def fromJSON(json_map):
+        user = User(None, None, None, None)
+        for key, value in json_map.items():
+            if key == 'workouts':
+                user.__dict__[key] = []
+                for workout in value:
+                    user.__dict__[key].append(Workout.fromJSON(workout))
+            else:
+                user.__dict__[key] = value
+        return user
+
 
     field_names = {
         "first_name": set_first_name,

@@ -11,6 +11,9 @@ class Workout:
         self.is_repeated = is_repeated
         self.date = date
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
     def add_exercise(self, exercise):
         self.exercises.add(exercise)
 
@@ -27,6 +30,13 @@ class Workout:
 
     def set_date(self, date): # Will have to use more sophisticated way of representing date
         self.date = date
+
+    @staticmethod
+    def fromJSON(json_map):
+        workout = Workout(None, None, [], None, None, None)
+        for key, value in json_map.items():
+            workout.__dict__[key] = value
+        return workout
 
 
     field_names = {

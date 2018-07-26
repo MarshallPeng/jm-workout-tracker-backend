@@ -1,4 +1,5 @@
 import firebase_admin
+import json
 from firebase_admin import db, credentials
 from src.config.config import FirebaseConfig
 from src.constants.DatabaseConstants import DatabaseConstants
@@ -18,7 +19,7 @@ class FirebaseClient:
         self.db.push(DatabaseConstants.USERS, user)
 
     def set_user(self, user):
-        self.db.child(DatabaseConstants.USERS + '/' + user.id).set(user.__dict__)
+        self.db.child(DatabaseConstants.USERS + '/' + user.id).set(json.loads(user.toJSON()))
 
     def get_user(self, user):
         return self.db.child(DatabaseConstants.USERS + '/' + user.id).get()
@@ -31,12 +32,12 @@ class FirebaseClient:
         self.db.child(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout.title).set(workout.__dict)
 
     def delete_workout(self, user, workout):
-        self.db.child(DatabaseConstants.USERS + '/' + user.user_name + '/' + DatabaseConstants.WORKOUTS + + workout.name)
+        self.db.child(DatabaseConstants.USERS + '/' + user.id + '/' + DatabaseConstants.WORKOUTS + + workout.name)
 
     def get_workout(self, user, workout):
         #TODO: after UUID implemented, have get_workout_by_id method and get_by_name prob
         return self.db.child(
-            DatabaseConstants.USERS + '/' + user.user_name + '/' + DatabaseConstants.WORKOUTS + + workout.name).get()
+            DatabaseConstants.USERS + '/' + user.id + '/' + DatabaseConstants.WORKOUTS + + workout.name).get()
 
     def set_exercise(self, user, workout, exercise):
         #Marshall, would it be cleaner to call delete on the get_user() or is this fine?

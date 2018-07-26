@@ -22,6 +22,15 @@ class WorkoutService:
         workout = Workout(id, user, name, [], category, is_repeated, date)
         self.target_workout = workout
 
+    def load_workout(self, user, id):
+        """
+        Load workout from firebase
+        :param user:
+        :param id:
+        :return:
+        """
+        self.target_workout = self.firebase_client.get_workout(user, id)
+
     def add_exercise(self, exercise):
         """
         Add exercise to workout
