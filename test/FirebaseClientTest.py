@@ -6,15 +6,10 @@ from src.model.User import User
 from src.client.FirebaseClient import FirebaseClient
 
 class FirebaseClientTest(unittest.TestCase):
-    exercise = None
-    workout = None
-    user = None
-    firebase_client_test = None
-
 
     def setUp(self):
-        self.exercise = Exercise("Barbell curl", 135, 3, 12, 500, 11)
-        self.workout = Workout("the day!!", 0, 0, 0, 0)
+        # self.exercise = Exercise("Barbell curl", 135, 3, 12, 500, 11)
+        # self.workout = Workout("the day!!", 0, 0, 0, 0)
         self.user = User("Jake")
         self.firebase_test_client = FirebaseClient()
 
