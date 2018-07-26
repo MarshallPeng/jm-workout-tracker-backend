@@ -5,7 +5,7 @@ from src.model.Workout import Workout
 from src.model.User import User
 from src.client.FirebaseClient import FirebaseClient
 
-class FirebaseClientTest(unittest.TestCase):
+# class FirebaseClientTest(unittest.TestCase):
 
     # TODO: bring this back after more implementation on FirebaseClient and the Models.
 
