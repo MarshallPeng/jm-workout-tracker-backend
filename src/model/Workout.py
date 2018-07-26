@@ -1,3 +1,6 @@
+from src.constants import WorkoutCategory
+
+
 class Workout:
 
     def __init__(self, id, name, exercises, category, is_repeated, date):
@@ -10,3 +13,25 @@ class Workout:
 
     def add_exercise(self, exercise):
         self.exercises.add(exercise)
+
+    def set_name(self, name):
+        self.name = name
+
+    def set_category(self, category):
+        if category in WorkoutCategory:
+            self.category = category
+
+    def set_is_repeated(self, is_repeated):
+        if type(is_repeated) == type(True):
+            self.is_repeated = is_repeated
+
+    def set_date(self, date): # Will have to use more sophisticated way of representing date
+        self.date = date
+
+
+    field_names = {
+        "category": set_category,
+        "name": set_name,
+        "is_repeated": set_is_repeated,
+        "date": set_date
+    }
