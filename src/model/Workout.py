@@ -1,4 +1,7 @@
+import json
+from src.constants.FieldNames import WorkoutFieldNames
 from src.constants import WorkoutCategory
+
 class Workout:
 
     def __init__(self, id, name, exercises, category, is_repeated, date):
@@ -29,6 +32,10 @@ class Workout:
     def set_date(self, date): # Will have to use more sophisticated way of representing date
         self.date = date
 
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
+
     @staticmethod
     def fromJSON(json_map):
         workout = Workout(None, None, [], None, None, None)
@@ -37,9 +44,9 @@ class Workout:
         return workout
 
 
-    field_names = {
-        "category": set_category,
-        "name": set_name,
-        "is_repeated": set_is_repeated,
-        "date": set_date
+    FIELD_NAMES = {
+        WorkoutFieldNames.CATEGORY : set_category,
+        WorkoutFieldNames.NAME : set_name,
+        WorkoutFieldNames.IS_REPEATED : set_is_repeated,
+        WorkoutFieldNames.DATE : set_date
     }

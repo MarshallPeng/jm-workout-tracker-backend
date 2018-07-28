@@ -57,7 +57,7 @@ class WorkoutService:
         :return:
         """
 
-        self.target_workout[field](self.target_workout, value)
+        self.target_workout.FIELD_NAMES[field](self.target_workout, value)
 
 
 

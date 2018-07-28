@@ -1,13 +1,19 @@
 import unittest
+
 import firebase_admin
-from src.service.UserService import UserService
-from src.client.FirebaseClient import FirebaseClient
+
+from src.client.FirebaseDBClient import FirebaseDBClient
 from src.model.User import User
+from src.service.UserService import UserService
+
 
 class UserServiceTest(unittest.TestCase):
+    """
+    Tests for test user service methods
+    """
 
     def setUp(self):
-        self.firebaseClient = FirebaseClient()
+        self.firebaseClient = FirebaseDBClient()
         self.test_user_service = UserService(self.firebaseClient)
 
         self.is_setup = False

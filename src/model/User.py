@@ -1,5 +1,6 @@
 import json
 from src.model.Workout import Workout
+from src.constants.FieldNames import UserFieldNames
 
 class User:
 
@@ -37,7 +38,7 @@ class User:
         return user
 
 
-    field_names = {
-        "first_name": set_first_name,
-        "last_name": set_last_name
+    FIELD_NAMES = {
+        UserFieldNames.FIRST_NAME : set_first_name,
+        UserFieldNames.LAST_NAME : set_last_name
     }

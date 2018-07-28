@@ -2,6 +2,10 @@ import uuid
 import logging
 from src.client.FirebaseClient import FirebaseClient
 from src.model.User import User
+from src.service.WorkoutService import WorkoutService
+
+import firebase_admin
+
 
 class UserService:
 
@@ -12,6 +16,7 @@ class UserService:
         self.target_user = target_user
 
 
+    # TODO: Figure out how to authenticate a user/session info.
     def initialize_user(self, first_name, last_name):
         """
         Create new user with required fields first and last name.
@@ -31,6 +36,7 @@ class UserService:
         :return:
         """
         self.target_user = self.firebase_client.get_user(id)
+        return self.target_user
 
 
     def edit_user_info(self, id, field, value):
@@ -43,11 +49,12 @@ class UserService:
         :return:
         """
 
-        self.target_user.field_names[field](self.target_user, value)
+        self.target_user.FIELD_NAMES[field](self.target_user, value)
 
 
     def edit_user_workouts(self):
         print "Do Something"
+
 
 
     def save_user(self, user):
