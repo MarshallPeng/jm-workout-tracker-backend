@@ -1,6 +1,9 @@
 import uuid
 import logging
+
+from src.client.FirebaseAuthClient import FirebaseAuthClient
 from src.client.FirebaseClient import FirebaseClient
+from src.client.FirebaseDBClient import FirebaseDBClient
 from src.model.User import User
 from src.service.WorkoutService import WorkoutService
 
@@ -9,15 +12,14 @@ import firebase_admin
 
 class UserService:
 
-    def __init__(self, firebase_client, target_user=None):
-        if type(firebase_client) is FirebaseClient:
-            self.firebase_client = firebase_client
-
+    def __init__(self, db, auth, target_user=None):
+        self.auth = auth
+        self.db = db
         self.target_user = target_user
 
 
     # TODO: Figure out how to authenticate a user/session info.
-    def initialize_user(self, first_name, last_name):
+    def initialize_user(self, email, phone_number, password, first_name, last_name):
         """
         Create new user with required fields first and last name.
         Also generate a uuid for that user.
@@ -25,9 +27,13 @@ class UserService:
         :param last_name:
         :return:
         """
-        id = 'user_' + str(uuid.uuid1())
-        new_user = User(id, first_name, last_name)
+        display_name = first_name + " " + last_name
+        user = self.auth.register(email, phone_number, password, display_name)
+
+        id = 'user_' + user.uid
+        new_user = User(id, first_name, last_name, email, phone_number)
         self.target_user = new_user
+        self.db.add_user(new_user)
 
     def load_user(self, id):
         """
@@ -35,7 +41,7 @@ class UserService:
         :param id:
         :return:
         """
-        self.target_user = self.firebase_client.get_user(id)
+        self.target_user = self.db.get_user(id)
         return self.target_user
 
 
@@ -59,7 +65,7 @@ class UserService:
 
     def save_user(self, user):
         if self.target_user != None:
-            self.firebase_client.add_user(user)
+            self.db.add_user(user)
         else:
             logging.info("Can't save null user")
 

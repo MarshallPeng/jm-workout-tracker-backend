@@ -2,6 +2,7 @@ import unittest
 
 import firebase_admin
 
+from src.client.FirebaseAuthClient import FirebaseAuthClient
 from src.client.FirebaseDBClient import FirebaseDBClient
 from src.model.User import User
 from src.service.UserService import UserService
@@ -13,14 +14,18 @@ class UserServiceTest(unittest.TestCase):
     """
 
     def setUp(self):
-        self.firebaseClient = FirebaseDBClient()
-        self.test_user_service = UserService(self.firebaseClient)
+        self.dbClient = FirebaseDBClient()
+        self.authClient = FirebaseAuthClient()
+        self.test_user_service = UserService(db=self.dbClient, auth=self.authClient)
 
         self.is_setup = False
         self.TEST_FIRST_NAME = "test_first_name"
         self.TEST_LAST_NAME = "test_last_name"
         self.TEST_ID = "test_id"
+        self.TEST_EMAIL = "TEST_EMAIL@gmail.com"
+        self.TEST_PHONE_NUMBER = "+12938457443"
         self.CHANGED_NAME = "test_changed_name"
+        self.TEST_PASSWORD = "test_password"
 
     def tearDown(self):
         firebase_admin.delete_app(firebase_admin.get_app())
@@ -29,7 +34,13 @@ class UserServiceTest(unittest.TestCase):
         """
         Test if user can be properly initialized
         """
-        self.test_user_service.initialize_user(self.TEST_FIRST_NAME, self.TEST_LAST_NAME)
+        self.test_user_service.initialize_user(
+            first_name=self.TEST_FIRST_NAME,
+            last_name=self.TEST_LAST_NAME,
+            email=self.TEST_EMAIL,
+            phone_number=self.TEST_PHONE_NUMBER,
+            password= self.TEST_PASSWORD
+        )
 
         self.assertEquals(self.test_user_service.target_user.first_name, self.TEST_FIRST_NAME)
         self.assertEquals(self.test_user_service.target_user.last_name, self.TEST_LAST_NAME)
