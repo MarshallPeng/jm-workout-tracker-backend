@@ -59,9 +59,24 @@ class UserService:
 
 
     def edit_user_workouts(self):
-        print "Do Something"
+        print("Do Something")
 
+    def delete_user(self, user):
+        """
+        Delete User through the User object
+        :param user:
+        :return:
+        """
+        self.auth.delete(user.id)
 
+    def delete_user_by_id(self, id):
+        """
+        Delete user through a UserId
+        :param id:
+        :return:
+        """
+        print("needed for tests")
+        self.auth.delete(id)
 
     def save_user(self, user):
         if self.target_user != None:

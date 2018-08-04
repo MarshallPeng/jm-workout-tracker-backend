@@ -26,5 +26,12 @@ class FirebaseAuthClient():
             display_name=display_name
         )
 
-        print "created user with id: " + user.uid
+        print("created user with id: " + user.uid)
         return user
+
+    def delete(self, userId):
+        auth.delete_user(userId)
+
+
+
+

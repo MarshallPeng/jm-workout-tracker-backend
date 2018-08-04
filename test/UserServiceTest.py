@@ -22,8 +22,8 @@ class UserServiceTest(unittest.TestCase):
         self.TEST_FIRST_NAME = "test_first_name"
         self.TEST_LAST_NAME = "test_last_name"
         self.TEST_ID = "test_id"
-        self.TEST_EMAIL = "TEST_EMAIL@gmail.com"
-        self.TEST_PHONE_NUMBER = "+12938457443"
+        self.TEST_EMAIL = "TEST_EMAIL+1@gmail.com"
+        self.TEST_PHONE_NUMBER = "+12938457441"
         self.CHANGED_NAME = "test_changed_name"
         self.TEST_PASSWORD = "test_password"
 
@@ -39,9 +39,11 @@ class UserServiceTest(unittest.TestCase):
             last_name=self.TEST_LAST_NAME,
             email=self.TEST_EMAIL,
             phone_number=self.TEST_PHONE_NUMBER,
-            password= self.TEST_PASSWORD
+            password=self.TEST_PASSWORD
         )
+        self.authClient.delete(self.test_user_service.target_user.id)
 
+        self.assertIsNotNone(self.test_user_service)
         self.assertEquals(self.test_user_service.target_user.first_name, self.TEST_FIRST_NAME)
         self.assertEquals(self.test_user_service.target_user.last_name, self.TEST_LAST_NAME)
         self.assertIsNotNone(self.test_user_service.target_user.id)
@@ -54,9 +56,15 @@ class UserServiceTest(unittest.TestCase):
 
         target_field_name = "first_name"
 
-        test_user = User(self.TEST_ID, self.TEST_FIRST_NAME, self.TEST_LAST_NAME)
+
+
+        #TODO: Jake : I'll Initialize a Workout[] array later unless you get to it
+        test_user = User(self.TEST_ID, self.TEST_FIRST_NAME, self.TEST_LAST_NAME, self.TEST_EMAIL, self.TEST_PHONE_NUMBER, None)
         self.test_user_service.target_user = test_user
         self.test_user_service.edit_user_info(self.TEST_ID, target_field_name, self.CHANGED_NAME)
 
         self.assertEquals(self.test_user_service.target_user.first_name, self.CHANGED_NAME)
+        self.test_user_service.edit_user_info(self.TEST_ID, target_field_name, self.CHANGED_NAME)
+
+
 
