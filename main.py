@@ -14,12 +14,21 @@ def form():
     return "hello dog"
 
 
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def register():
     logging.info("request received to register user: ")
-    auth = FirebaseAuthClient()
-    db = FirebaseDBClient()
+    controller = JMController()
 
-    user_service = UserService(auth, db)
-    user_service.initialize_user()
+    result = controller.register(
+        email = request.json['email'],
+        first_name= request.json['first_name'],
+        last_name= request.json['last_name'],
+        phone_number= request.json['phone_number'],
+        password= request.json['password']
+    )
+
+    return result
+
+
+
 

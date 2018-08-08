@@ -33,7 +33,7 @@ class UserService:
         id = 'user_' + user.uid
         new_user = User(id, first_name, last_name, email, phone_number)
         self.target_user = new_user
-        self.db.add_user(new_user)
+        self.db.set_user(new_user)
 
     def load_user(self, id):
         """

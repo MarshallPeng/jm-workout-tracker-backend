@@ -41,7 +41,8 @@ class UserServiceTest(unittest.TestCase):
             phone_number=self.TEST_PHONE_NUMBER,
             password=self.TEST_PASSWORD
         )
-        self.test_user_service.delete(self.test_user_service.target_user.id)
+
+#         self.test_user_service.delete_user(self.test_user_service.target_user.id)
 
         self.assertIsNotNone(self.test_user_service)
         self.assertEquals(self.test_user_service.target_user.first_name, self.TEST_FIRST_NAME)
