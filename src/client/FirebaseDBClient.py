@@ -32,6 +32,9 @@ class FirebaseDBClient():
     def get_user(self, user):
         return self.db.child(DatabaseConstants.USERS + '/' + user.id).get()
 
+    def delete_user(self, user):
+        self.db.child(DatabaseConstants.USERS + '/' + user.id).delete()
+
     #for jake: for now use set_workout
     def add_workout(self, user, workout):
         self.db.push(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)

@@ -68,6 +68,7 @@ class UserService:
         :return:
         """
         self.auth.delete(user.id)
+        self.db.delete_user(user)
 
     def delete_user_by_id(self, id):
         """
