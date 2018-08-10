@@ -30,18 +30,18 @@ class UserService:
         display_name = first_name + " " + last_name
         user = self.auth.register(email, phone_number, password, display_name)
 
-        id = 'user_' + user.uid
+        id = user.uid
         new_user = User(id, first_name, last_name, email, phone_number)
         self.target_user = new_user
-        self.db.add_user(new_user)
+        self.db.set_user(new_user)
 
-    def load_user(self, id):
+    def load_user_by_id(self, id):
         """
         Load user from firebase given id
         :param id:
         :return:
         """
-        self.target_user = self.db.get_user(id)
+        self.target_user = self.db.get_user_by_id(id)
         return self.target_user
 
 

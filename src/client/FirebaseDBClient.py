@@ -29,11 +29,14 @@ class FirebaseDBClient():
     def set_user(self, user):
         self.db.child(DatabaseConstants.USERS + '/' + user.id).set(json.loads(user.toJSON()))
 
-    def get_user(self, user):
-        return self.db.child(DatabaseConstants.USERS + '/' + user.id).get()
+    def get_user_by_id(self, id):
+        return self.db.child(DatabaseConstants.USERS + '/' + id).get()
 
     def delete_user(self, user):
         self.db.child(DatabaseConstants.USERS + '/' + user.id).delete()
+
+    def delete_user_by_id(self, id):
+        self.db.child(DatabaseConstants.USERS + '/' + id).delete()
 
     #for jake: for now use set_workout
     def add_workout(self, user, workout):
