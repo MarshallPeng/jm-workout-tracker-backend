@@ -1,6 +1,8 @@
 import uuid
 import logging
 
+from firebase_admin.auth import AuthError
+
 from src.client.FirebaseAuthClient import FirebaseAuthClient
 from src.client.FirebaseClient import FirebaseClient
 from src.client.FirebaseDBClient import FirebaseDBClient
@@ -28,10 +30,17 @@ class UserService:
         :return:
         """
         display_name = first_name + " " + last_name
+
         user = self.auth.register(email, phone_number, password, display_name)
 
-        id = 'user_' + user.uid
-        new_user = User(id, first_name, last_name, email, phone_number)
+        new_user = User(
+            id=user.uid,
+            first_name=user.display_name.split(' ')[0],
+            last_name=user.display_name.split(' ')[1],
+            email=user.email,
+            phone_number=user.phone_number
+        )
+
         self.target_user = new_user
         self.db.set_user(new_user)
 
@@ -68,6 +77,7 @@ class UserService:
         :return:
         """
         self.auth.delete(user.id)
+        self.db.delete_user(user)
 
     def delete_user_by_id(self, id):
         """

@@ -22,8 +22,8 @@ class UserServiceTest(unittest.TestCase):
         self.TEST_FIRST_NAME = "test_first_name"
         self.TEST_LAST_NAME = "test_last_name"
         self.TEST_ID = "test_id"
-        self.TEST_EMAIL = "TEST_EMAIL+1@gmail.com"
-        self.TEST_PHONE_NUMBER = "+12938457441"
+        self.TEST_EMAIL = "TEST_EMAIL@gmail.com"
+        self.TEST_PHONE_NUMBER = "+12938457449"
         self.CHANGED_NAME = "test_changed_name"
         self.TEST_PASSWORD = "test_password"
 
@@ -41,8 +41,8 @@ class UserServiceTest(unittest.TestCase):
             phone_number=self.TEST_PHONE_NUMBER,
             password=self.TEST_PASSWORD
         )
+        self.test_user_service.delete_user(self.test_user_service.target_user.id)
 
-#         self.test_user_service.delete_user(self.test_user_service.target_user.id)
 
         self.assertIsNotNone(self.test_user_service)
         self.assertEquals(self.test_user_service.target_user.first_name, self.TEST_FIRST_NAME)
