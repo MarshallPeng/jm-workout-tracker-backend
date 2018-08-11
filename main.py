@@ -16,8 +16,9 @@ def form():
 
 @app.route('/register', methods=['POST'])
 def register():
-    logging.info("request received to register user: ")
+
     controller = JMController()
+    logging.info("request to initialize user with data: " + str(request.json))
 
     result = controller.register(
         email = request.json['email'],
@@ -30,5 +31,5 @@ def register():
     return result
 
 
-
-
+if __name__ == '__main__':
+    app.run(debug=True)

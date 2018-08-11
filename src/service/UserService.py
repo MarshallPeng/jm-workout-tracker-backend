@@ -1,4 +1,5 @@
 import uuid
+import json
 import logging
 
 from firebase_admin.auth import AuthError
@@ -7,6 +8,7 @@ from src.client.FirebaseAuthClient import FirebaseAuthClient
 from src.client.FirebaseClient import FirebaseClient
 from src.client.FirebaseDBClient import FirebaseDBClient
 from src.model.User import User
+from src.service.UserServiceException import UserServiceException
 from src.service.WorkoutService import WorkoutService
 
 import firebase_admin
@@ -31,7 +33,13 @@ class UserService:
         """
         display_name = first_name + " " + last_name
 
-        user = self.auth.register(email, phone_number, password, display_name)
+        try:
+            user = self.auth.register(email, phone_number, password, display_name)
+        except AuthError as e:
+            server_response = json.loads(e.message.split('Server response:')[1])
+            code = server_response['error']['code']
+            user_message = server_response['error']['message']
+            raise UserServiceException(e, user_message, e.message, status_code=code)
 
         new_user = User(
             id=user.uid,
@@ -43,14 +51,15 @@ class UserService:
 
         self.target_user = new_user
         self.db.set_user(new_user)
+        return new_user
 
-    def load_user(self, id):
+    def load_user_by_id(self, id):
         """
         Load user from firebase given id
         :param id:
         :return:
         """
-        self.target_user = self.db.get_user(id)
+        self.target_user = self.db.get_user_by_id(id)
         return self.target_user
 
 
