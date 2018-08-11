@@ -19,15 +19,7 @@ def register():
 
     controller = JMController()
     logging.info("request to initialize user with data: " + str(request.json))
-
-    result = controller.register(
-        email = request.json['email'],
-        first_name= request.json['first_name'],
-        last_name= request.json['last_name'],
-        phone_number= request.json['phone_number'],
-        password= request.json['password']
-    )
-
+    result = controller.register(request.json)
     return result
 
 

@@ -35,11 +35,18 @@ class UserService:
 
         try:
             user = self.auth.register(email, phone_number, password, display_name)
+
+        # Authentication error
         except AuthError as e:
             server_response = json.loads(e.message.split('Server response:')[1])
             code = server_response['error']['code']
             user_message = server_response['error']['message']
-            raise UserServiceException(e, user_message, e.message, status_code=code)
+            developer_message = e.message
+            raise UserServiceException(e, user_message, developer_message, status_code=code)
+
+        # invalid input
+        except ValueError as e:
+            raise UserServiceException(e, e.message, status_code=400)
 
         new_user = User(
             id=user.uid,

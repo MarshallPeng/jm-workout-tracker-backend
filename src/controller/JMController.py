@@ -19,7 +19,6 @@ class JMController:
         self.response_util = ResponseUtil()
 
 
-
     def get_user(self, id):
         result = self.user_service.load_user_by_id(id)
         logging.info(result)
@@ -28,10 +27,25 @@ class JMController:
         return response
 
     # TODO: initialize user needs to go through auth first.
-    def register(self, first_name, last_name, email, phone_number, password):
+    def register(self, data):
+
+        # get data from POST request
+        try:
+            email = data['email']
+            first_name = data['first_name']
+            last_name = data['last_name']
+            phone_number = data['phone_number']
+            password = data['password']
+
+        # check for missing fields
+        except KeyError as e:
+            message = "required field \'" + e.message + "\' not found"
+            response = self.response_util.build_error_response(code=400, message=message)
+            return response
 
         logging.info("Attempting to initialize user...")
 
+        # Attempt to initialize user
         try:
             user = self.user_service.initialize_user(
                 first_name= first_name,
@@ -40,12 +54,27 @@ class JMController:
                 phone_number= phone_number,
                 password=password
             )
+
+        # Catch any errors from UserServiceException
         except UserServiceException as e:
             logging.error(e.developer_message)
             response = self.response_util.build_error_response(code=e.status_code, message=e.message)
             return response
 
-
+        # Return success message.
         logging.info("User initialized with id: " + user.id)
         response = self.response_util.build_success_response(code=201, message='User Created', data = user.toJSON())
         return response
+
+
+    # def add_workout(self, data):
+    #
+    #
+    #     user = self.user_service.load_user_by_id(id)
+    #     self.workout_service.new_workout(
+    #         user=user,
+    #         name=workout_name,
+    #         category=category,
+    #         is_repeated
+    #
+    #     )
