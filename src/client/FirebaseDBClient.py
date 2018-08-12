@@ -42,8 +42,8 @@ class FirebaseDBClient():
     def add_workout(self, user, workout):
         self.db.push(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)
 
-    def set_workout(self, user, workout):
-        self.db.child(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS + '/' + workout.title).set(workout.__dict)
+    def set_workout(self, userid, workout):
+        self.db.child(DatabaseConstants.USERS + '/' + userid + '/' + DatabaseConstants.WORKOUTS + '/' + workout.id).set(json.loads(workout.toJSON()))
 
     def delete_workout(self, user, workout):
         self.db.child(DatabaseConstants.USERS + '/' + user.id + '/' + DatabaseConstants.WORKOUTS + + workout.name)

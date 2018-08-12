@@ -10,7 +10,7 @@ class ResponseUtil:
                 'message' : message
             }
         )
-        response.status_code = 500
+        response.status_code = code
         return response
 
     def build_success_response(self, code, message, data):

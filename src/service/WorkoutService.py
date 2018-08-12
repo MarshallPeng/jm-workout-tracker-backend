@@ -4,11 +4,11 @@ import uuid
 class WorkoutService:
 
     def __init__(self, firebase_client):
-        self.firebase_client = firebase_client
+        self.db = firebase_client
         self.target_workout = None
 
 
-    def new_workout(self, user, name, category, is_repeated, date):
+    def new_workout(self, userid, name, category, is_repeated, date):
         """
         Create new workout object
         :param user:
@@ -19,8 +19,10 @@ class WorkoutService:
         :return:
         """
         id = 'workout_' + str(uuid.uuid1())
-        workout = Workout(id, user, name, [], category, is_repeated, date)
+        workout = Workout(id, name, [], category, is_repeated, date)
+        self.db.set_workout(userid, workout)
         self.target_workout = workout
+        return workout
 
     def load_workout(self, user, id):
         """
@@ -29,7 +31,7 @@ class WorkoutService:
         :param id:
         :return:
         """
-        self.target_workout = self.firebase_client.get_workout(user, id)
+        self.target_workout = self.db.get_workout(user, id)
 
     def add_exercise(self, exercise):
         """
@@ -46,7 +48,7 @@ class WorkoutService:
         Commit workout to database.
         :return:
         """
-        self.firebase_client.set_workout(self.target_workout.user, self.target_workout)
+        self.db.set_workout(self.target_workout.user, self.target_workout)
 
 
     def edit_info(self, field, value):

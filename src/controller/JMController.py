@@ -10,6 +10,9 @@ from src.util.ResponseUtil import ResponseUtil
 
 
 class JMController:
+    """
+    Handles requests and responses to the user.
+    """
 
     def __init__(self):
         self.firebase_db_client = FirebaseDBClient()
@@ -67,14 +70,23 @@ class JMController:
         return response
 
 
-    # def add_workout(self, data):
-    #
-    #
-    #     user = self.user_service.load_user_by_id(id)
-    #     self.workout_service.new_workout(
-    #         user=user,
-    #         name=workout_name,
-    #         category=category,
-    #         is_repeated
-    #
-    #     )
+    def new_workout(self, data):
+
+        workout_name = data['workout_name']
+        category = data['category']
+        is_repeated = data['is_repeated']
+        date = data['date']
+        userid = data['id']
+
+        workout = self.workout_service.new_workout(
+            userid=userid,
+            name=workout_name,
+            category=category,
+            is_repeated=is_repeated,
+            date=date
+        )
+
+        response = self.response_util.build_success_response(code=201, message='Workout Created', data=workout.toJSON())
+        return response
+
+

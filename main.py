@@ -22,6 +22,13 @@ def register():
     result = controller.register(request.json)
     return result
 
+@app.route('/workout', methods=['POST'])
+def new_workout():
+    controller = JMController()
+    logging.info("request to create new workout with data: " + str(request.json))
+    result = controller.new_workout(request.json)
+    return result
+
 
 if __name__ == '__main__':
     app.run(debug=True)
