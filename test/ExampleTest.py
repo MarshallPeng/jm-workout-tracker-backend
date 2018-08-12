@@ -7,4 +7,4 @@ class ExampleTest(unittest.TestCase):
         self.assert_(1 == 1)
 
     def test_b(self):
-        self.assertNotEquals(1,2)
+        self.assertNotEquals(1, 2)

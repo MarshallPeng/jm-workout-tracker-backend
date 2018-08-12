@@ -29,7 +29,7 @@ class User:
     # TODO: Come up with more elegant solution to converting from json to object. Recursive solution maybe?
     @staticmethod
     def fromJSON(json_map):
-        user = User(None, None, None, None)
+        user = User(None, None, None, None, None)
         for key, value in json_map.items():
             if key == 'workouts':
                 user.__dict__[key] = []
