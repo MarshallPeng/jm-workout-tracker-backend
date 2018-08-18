@@ -11,19 +11,25 @@ class ResponseUtil:
             }
         )
         response.status_code = code
+        response.headers['Access-Control-Allow-Origin'] = '*'
         return response
 
     def build_success_response(self, code, message, data):
-        parsed = json.loads(data)
+        if type(data) is dict:
+            parsed = data
+        elif type(data) is str:
+            parsed = json.loads(data)
 
         response = jsonify(
             {
                 'status' : 'ok',
                 'code' : code,
                 'message': message,
-                'result' : parsed
+                'result' : parsed,
             }
         )
+        response.status_code = code
+        response.headers['Access-Control-Allow-Origin'] = '*'
 
 
         return response

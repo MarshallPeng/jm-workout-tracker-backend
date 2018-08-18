@@ -3,3 +3,5 @@ Werkzeug<0.13.0,>=0.12.0
 firebase-admin==2.11.0
 nose==1.3.7
 pathlib==1.0.1
+requests==2.19.1
+requests-toolbelt==0.8.0

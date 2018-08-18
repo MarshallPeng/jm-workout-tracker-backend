@@ -1,10 +1,10 @@
-
+import json
 
 class Exercise:
     MAX_RPE = 10
     MIN_RPE = 0
 
-    def __init__(self, name, weight, total_sets, total_reps, rest_time, rpe):
+    def __init__(self, name, weight, total_sets, total_reps, rest_time):
         self.name = name
         self.weight = weight
         self.rest_time = rest_time
@@ -15,6 +15,10 @@ class Exercise:
         self.completed_volume = 0
         self.expected_volume = total_sets * total_reps * weight
         self.rpe = 0
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
 
     def set_rest_time(self, rest_time):
         self.rest_time = rest_time

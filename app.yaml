@@ -7,3 +7,10 @@ handlers:
   static_dir: static
 - url: /.*
   script: main.app
+
+libraries:
+- name: ssl
+  version: latest
+
+env_variables:
+  GCLOUD_PROJECT: 'jm-workout-tracker'

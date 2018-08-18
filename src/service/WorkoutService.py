@@ -18,20 +18,20 @@ class WorkoutService:
         :param date:
         :return:
         """
-        id = 'workout_' + str(uuid.uuid1())
+        id = str(uuid.uuid1())
         workout = Workout(id, name, [], category, is_repeated, date)
         self.db.set_workout(userid, workout)
         self.target_workout = workout
         return workout
 
-    def load_workout(self, user, id):
+    def load_workout(self, userid, workoutid):
         """
         Load workout from firebase
         :param user:
         :param id:
         :return:
         """
-        self.target_workout = self.db.get_workout(user, id)
+        self.target_workout = self.db.get_workout_by_id(userid, workoutid)
 
     def add_exercise(self, exercise):
         """
@@ -43,12 +43,13 @@ class WorkoutService:
             self.target_workout.add_exercise(exercise)
 
 
-    def save_workout(self):
+    def save_workout(self, userid, workoutid, exercise):
         """
         Commit workout to database.
         :return:
         """
-        self.db.set_workout(self.target_workout.user, self.target_workout)
+
+        self.db.add_workout(userid, workoutid, exercise)
 
 
     def edit_info(self, field, value):

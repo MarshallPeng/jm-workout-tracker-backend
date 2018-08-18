@@ -39,11 +39,17 @@ class FirebaseDBClient():
         self.db.child(DatabaseConstants.USERS + '/' + id).delete()
 
     #for jake: for now use set_workout
-    def add_workout(self, user, workout):
-        self.db.push(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)
+    # def add_workout(self, user, workout):
+    #     self.db.push(DatabaseConstants.USERS + '/' + user + '/' + DatabaseConstants.WORKOUTS)
 
-    def set_workout(self, userid, workout):
-        self.db.child(DatabaseConstants.USERS + '/' + userid + '/' + DatabaseConstants.WORKOUTS + '/' + workout.id).set(json.loads(workout.toJSON()))
+    def add_workout(self, userid, workoutid, workout):
+        path = DatabaseConstants.get_workout_path(userid, workoutid)
+        if self.db.child(path).get() is None:
+            self.db.child(path).set([json.loads(workout.toJSON())])
+        else:
+            exercises = self.db.child(path).get()
+            exercises.append(json.loads(workout.toJSON()))
+            self.db.child(path).set(exercises)
 
     def delete_workout(self, user, workout):
         self.db.child(DatabaseConstants.USERS + '/' + user.id + '/' + DatabaseConstants.WORKOUTS + + workout.name)
@@ -51,7 +57,11 @@ class FirebaseDBClient():
     def get_workout(self, user, workout):
         #TODO: after UUID implemented, have get_workout_by_id method and get_by_name prob
         return self.db.child(
-            DatabaseConstants.USERS + '/' + user.id + '/' + DatabaseConstants.WORKOUTS + + workout.name).get()
+            DatabaseConstants.USERS + '/' + user.id + '/' + DatabaseConstants.WORKOUTS + + workout.id).get()
+
+    def get_workout_by_id(self, userid, workoutid):
+        return self.db.child(
+            DatabaseConstants.USERS + '/' + userid + '/' + DatabaseConstants.WORKOUTS + '/' + workoutid).get()
 
     def set_exercise(self, user, workout, exercise):
         #Marshall, would it be cleaner to call delete on the get_user() or is this fine?
