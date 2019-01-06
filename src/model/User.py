@@ -13,8 +13,10 @@ class User:
         self.workouts = workouts
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
+        if other == None :
+            return self.__dict__ == other
+        else :
+            return self.__dict__ == other.__dict__
 
     def set_first_name(self, first_name):
         self.first_name = first_name

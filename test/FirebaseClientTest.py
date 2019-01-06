@@ -30,6 +30,6 @@ class FirebaseClientTest(unittest.TestCase):
         self.firebase_test_client.set_user(self.user)
         retrieved = User.fromJSON(self.firebase_test_client.get_user_by_id(self.user.id))
 
-        self.assertEquals(self.user, retrieved)
+        self.assertEqual(self.user, retrieved)
 
 

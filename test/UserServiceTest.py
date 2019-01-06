@@ -25,6 +25,8 @@ class UserServiceTest(unittest.TestCase):
         self.TEST_EMAIL = "TEST_EMAIL+510@gmail.com"
         self.TEST_PHONE_NUMBER = "+13938453459"
         self.CHANGED_NAME = "test_changed_name"
+        self.CHANGED_NAME_2 = "test_changed_name"
+
         self.TEST_PASSWORD = "test_password"
 
     def tearDown(self):
@@ -73,14 +75,17 @@ class UserServiceTest(unittest.TestCase):
         """
 
         target_field_name = "first_name"
-
         #TODO: Jake : I'll Initialize a Workout[] array later unless you get to it
         test_user = User(self.TEST_ID, self.TEST_FIRST_NAME, self.TEST_LAST_NAME, self.TEST_EMAIL, self.TEST_PHONE_NUMBER, None)
         self.test_user_service.target_user = test_user
         self.test_user_service.edit_user_info(self.TEST_ID, target_field_name, self.CHANGED_NAME)
-
         self.assertEqual(self.test_user_service.target_user.first_name, self.CHANGED_NAME)
-        self.test_user_service.edit_user_info(self.TEST_ID, target_field_name, self.CHANGED_NAME)
+        self.assertEqual(self.test_user_service.target_user.last_name, self.TEST_LAST_NAME)
+
+        target_field_name = "last_name"
+        self.test_user_service.edit_user_info(self.TEST_ID, target_field_name, self.CHANGED_NAME_2)
+        self.assertEqual(self.test_user_service.target_user.first_name, self.CHANGED_NAME)
+        self.assertEqual(self.test_user_service.target_user.last_name, self.CHANGED_NAME_2)
 
 
 

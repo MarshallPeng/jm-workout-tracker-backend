@@ -44,7 +44,6 @@ class UserService:
         self.target_user = self.db.get_user_by_id(id)
         return self.target_user
 
-
     def edit_user_info(self, id, field, value):
 
         """
@@ -54,9 +53,8 @@ class UserService:
         :param value:
         :return:
         """
-
         self.target_user.FIELD_NAMES[field](self.target_user, value)
-
+        self.save_user(self.target_user)
 
     def edit_user_workouts(self):
         print("Do Something")

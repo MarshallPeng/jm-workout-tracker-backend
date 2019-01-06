@@ -24,7 +24,7 @@ class FirebaseDBClient():
         self.db = db.reference()
 
     def add_user(self, user):
-        self.db.push(DatabaseConstants.USERS, user)
+        self.db.push(DatabaseConstants.USERS + '/' + user.id)
 
     def set_user(self, user):
         self.db.child(DatabaseConstants.USERS + '/' + user.id).set(json.loads(user.toJSON()))
